@@ -1,7 +1,7 @@
 function Day() {  
 
     return ( 
-        <div className='bg-gray-300 h-[100vh] w-[100vw] flex flex-row items-center justify-center'>
+        <div className='bg-gray-300 h-[200px] w-[100px] shadow-2xl'>
 
         </div>
       )
