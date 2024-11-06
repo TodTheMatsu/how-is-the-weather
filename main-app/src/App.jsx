@@ -1,13 +1,28 @@
 import { useState, useEffect } from 'react';
-import Day from './Day';  // Assuming Day is a component you created to display the temperature
+import Day from './Day';
 
 function App() {
-  const [weatherData, setWeatherData] = useState(null);  // Initialize as null to handle the loading state
+  const [weatherData, setWeatherData] = useState(null);
+  const [backgroundClass, setBackgroundClass] = useState('bg-sky-100');
 
-  // Array to map day index to actual weekday name
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-  // Fetch weather data for the next 7 days
+  // Function to determine background color based on the current hour
+  const getBackgroundClass = () => {
+    const currentHour = new Date().getHours();
+    
+    // Assign background colors based on the time of day
+    if (currentHour >= 6 && currentHour < 12) {
+      return 'bg-gradient-to-r from-yellow-200 via-yellow-300 to-yellow-400'; // Morning
+    } else if (currentHour >= 12 && currentHour < 18) {
+      return 'bg-gradient-to-r from-sky-400 via-sky-300 to-sky-100'; // Afternoon
+    } else if (currentHour >= 18 && currentHour < 21) {
+      return 'bg-gradient-to-r from-orange-500 via-red-500 to-pink-500'; // Evening
+    } else {
+      return 'bg-gradient-to-r from-indigo-700 via-purple-700 to-blue-700'; // Night
+    }
+  };
+
   useEffect(() => {
     const fetchWeather = async () => {
       const latitude = 10.867;
@@ -19,42 +34,48 @@ function App() {
       const data = await response.json();
       console.log(data);
 
-      // Set the fetched data to the state
       setWeatherData(data);
     };
 
     fetchWeather();
-  }, []); // Empty dependency array to run only once when the component mounts
 
-  // Render loading message if weatherData is not yet available
+    // Set background class based on the time of day
+    setBackgroundClass(getBackgroundClass());
+
+    // Optional: Update background color every hour
+    const intervalId = setInterval(() => {
+      setBackgroundClass(getBackgroundClass());
+    }, 3600000); // Update every hour
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, []); // Only fetch once on mount
+
   if (!weatherData) {
     return <div>Loading...</div>;
   }
 
-  // Get today's date for comparison
-  const today = new Date().toISOString().split('T')[0];  // Get current date in YYYY-MM-DD format
+  const today = new Date().toISOString().split('T')[0];
 
   return (
-    <div className='bg-gradient-to-r from-sky-100 via-sky-300 to-sky-100 h-screen w-screen flex flex-row items-center justify-center space-x-5 '>
-        {/* Check if daily data is available, then map through it */}
+    <div className={`${backgroundClass} h-screen w-screen flex flex-row items-center justify-center space-x-5 animate-gradient`}>
+      <div className='flex flex-row items-center justify-center space-x-5'>
         {weatherData.daily && weatherData.daily.temperature_2m_max.map((temp, index) => {
-          // Get the date for the current day from the 'time' field
           const date = new Date(weatherData.daily.time[index]);
-          const dayOfWeek = daysOfWeek[date.getDay()];  // Get day of the week (0 = Sunday, 1 = Monday, etc.)
-          const dateString = date.toISOString().split('T')[0]; // Get date in YYYY-MM-DD format
+          const dayOfWeek = daysOfWeek[date.getDay()];
+          const dateString = date.toISOString().split('T')[0];
 
-          // If the date matches today's date, use "Today" instead of the day of the week
           const displayDay = (dateString === today) ? "Today" : dayOfWeek;
 
           return (
             <Day
               key={index}
-              dayOfWeek={displayDay}  
-              maxTemperature={temp}   
-              minTemperature={weatherData.daily.temperature_2m_min[index]} 
+              dayOfWeek={displayDay}
+              maxTemperature={temp}
+              minTemperature={weatherData.daily.temperature_2m_min[index]}
             />
           );
         })}
+      </div>
     </div>
   );
 }
