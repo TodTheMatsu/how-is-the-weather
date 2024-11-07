@@ -12,14 +12,14 @@ function App() {
     const currentHour = new Date().getHours();
     
     // Assign background colors based on the time of day
-    if (currentHour >= 6 && currentHour < 12) {
+    if (currentHour >= 5 && currentHour < 7) {
       return 'bg-gradient-to-r from-yellow-200 via-yellow-300 to-yellow-400'; // Morning
-    } else if (currentHour >= 12 && currentHour < 18) {
+    } else if (currentHour >= 7 && currentHour < 15) {
       return 'bg-gradient-to-r from-sky-400 via-sky-300 to-sky-100'; // Afternoon
-    } else if (currentHour >= 18 && currentHour < 21) {
+    } else if (currentHour >= 15 && currentHour < 20) {
       return 'bg-gradient-to-r from-orange-500 via-red-500 to-pink-500'; // Evening
     } else {
-      return 'bg-gradient-to-r from-indigo-700 via-purple-700 to-blue-700'; // Night
+      return 'bg-gradient-to-r from-indigo-900 via-purple-900 to-blue-900'; // Night
     }
   };
 
@@ -38,17 +38,14 @@ function App() {
     };
 
     fetchWeather();
-
-    // Set background class based on the time of day
     setBackgroundClass(getBackgroundClass());
 
-    // Optional: Update background color every hour
     const intervalId = setInterval(() => {
       setBackgroundClass(getBackgroundClass());
-    }, 3600000); // Update every hour
+    }, 3600000);
 
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
-  }, []); // Only fetch once on mount
+    return () => clearInterval(intervalId); 
+  }, []);
 
   if (!weatherData) {
     return <div>Loading...</div>;
