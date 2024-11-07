@@ -5,7 +5,7 @@ function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [backgroundClass, setBackgroundClass] = useState('bg-sky-100');
 
-  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   // Function to determine background color based on the current hour
   const getBackgroundClass = () => {
@@ -14,9 +14,9 @@ function App() {
     // Assign background colors based on the time of day
     if (currentHour >= 5 && currentHour < 7) {
       return 'bg-gradient-to-t from-yellow-200 via-yellow-300 to-yellow-400'; // Morning
-    } else if (currentHour >= 7&& currentHour < 12) {
+    } else if (currentHour >= 7&& currentHour < 15) {
       return 'bg-gradient-to-t from-sky-400 via-sky-300 to-sky-100'; // Afternoon
-    } else if (currentHour >= 12 && currentHour < 20) {
+    } else if (currentHour >= 15 && currentHour < 20) {
       return 'bg-gradient-to-t from-orange-500 via-red-500 to-pink-500'; // Evening
     } else {
       return 'bg-gradient-to-t from-indigo-900 via-purple-900 to-blue-900'; // Night
@@ -29,7 +29,7 @@ function App() {
       const longitude = 106.917;
 
       const response = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FBangkok`
+        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,rain_sum,showers_sum,snowfall_sum&timezone=Asia%2FBangkok`
       );
       const data = await response.json();
       console.log(data);
@@ -65,8 +65,8 @@ function App() {
       ></video>
 
       {/* Main content */}
-      <div className={`${backgroundClass}backdrop-opacity-10 relative z-10 h-[2000px] flex items-center justify-center space-x-5`}>
-        <div className='flex flex-row items-center justify-center space-x-5'>
+      <div className={`${backgroundClass}backdrop-opacity-10 relative z-10 h-[200vh] flex items-top justify-center space-x-5`}>
+        <div className='flex flex-grow-0 h-[1400px] flex-row items-center justify-center space-x-5'>
           {weatherData.daily && weatherData.daily.temperature_2m_max.map((temp, index) => {
             const date = new Date(weatherData.daily.time[index]);
             const dayOfWeek = daysOfWeek[date.getDay()];
