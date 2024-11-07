@@ -1,4 +1,4 @@
-function Day({ maxTemperature, minTemperature, dayOfWeek, key }) {
+function Day({ maxTemperature, minTemperature, dayOfWeek }) {
     const isToday = dayOfWeek === "Today";
     
     return (
