@@ -10,6 +10,7 @@ import {
   WiHail,
   WiSunrise,
   WiSunset,
+  WiThermometer,
 } from 'react-icons/wi';
 
 function Today({ weatherData, getWeatherCondition }) {
@@ -71,11 +72,13 @@ function Today({ weatherData, getWeatherCondition }) {
 
       <div className="flex items-center space-x-4 -top-5 relative">
         {weatherIcon}
-        <div className="text-black text-4xl font-bold">
+        
+        <div className="text-black text-4xl font-semibold">
+            
           <p className="text-7xl">{todayWeather.maxTemp}°C</p>
           <p className="text-lg text-gray-500 bg-opacity-70 rounded-full px-3 py-0.5 mt-2 inline-block">
-            {todayWeather.condition}
-          </p>
+             {todayWeather.condition.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}
+         </p>
         </div>
       </div>
 
