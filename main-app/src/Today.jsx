@@ -1,21 +1,31 @@
 import React from 'react';
-import { WiDaySunny, WiCloudy, WiRain, WiSnow, WiShowers, WiFog, WiThunderstorm, WiHail } from 'react-icons/wi';
+import {
+  WiDaySunny,
+  WiCloudy,
+  WiRain,
+  WiSnow,
+  WiShowers,
+  WiFog,
+  WiThunderstorm,
+  WiHail,
+  WiSunrise,
+  WiSunset,
+} from 'react-icons/wi';
 
 function Today({ weatherData, getWeatherCondition }) {
   const todayData = weatherData.daily ? weatherData.daily : null;
   const iconSize = 200;
+
   if (!todayData) {
     return <div>Loading...</div>;
   }
 
-  const todayIndex = new Date().getDay(); // Get the index for today's data
+  const todayIndex = 0; // Since the API's daily array starts with today as the first element
 
   const todayWeather = {
     maxTemp: todayData.temperature_2m_max[todayIndex],
     minTemp: todayData.temperature_2m_min[todayIndex],
     condition: getWeatherCondition(todayData.weather_code[todayIndex]),
-    feelsLike: todayData.temperature_2m_max[todayIndex], // Replace with actual "feels like" data if available
-    humidity: 60, // Replace with actual humidity data if available
     windSpeed: todayData.wind_speed_10m_max[todayIndex],
     windGusts: todayData.wind_gusts_10m_max[todayIndex],
     uvIndex: todayData.uv_index_max[todayIndex],
@@ -54,62 +64,73 @@ function Today({ weatherData, getWeatherCondition }) {
   }
 
   return (
-    <div className="h-[450px] w-[1200px] -top-[500px] backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl p-8 flex flex-col items-start justify-center relative space-y-4">
-      {/* Title */}
+    <div className="h-[400px] w-[1200px] -top-[500px] backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl p-8 flex flex-col items-center justify-center relative space-y-4">
       <div className="text-black text-3xl font-bold mb-6 relative -bottom-5">
         <h1>Today's Weather</h1>
       </div>
-      {/* Weather Icon and Condition */}
+
       <div className="flex items-center space-x-4 mb-4 -top-5 relative">
         {weatherIcon}
         <div className="text-black text-4xl font-bold">
           <p className="text-7xl">{todayWeather.maxTemp}°C</p>
-          <p className="text-lg text-gray-100 bg-gray-800 bg-opacity-70 rounded-full px-3 py-0.5 mt-2 inline-block">
+          <p className="text-lg text-gray-500 bg-opacity-70 rounded-full px-3 py-0.5 mt-2 inline-block">
             {todayWeather.condition}
           </p>
         </div>
       </div>
-      <div className='relative -top-10'>
-      {/* Temperature and Feels Like */}
-      <div className="flex space-x-10 text-black text-base">
-        <div>
-          <p className="text-gray-500">Feels like:</p>
-          <p>{todayWeather.feelsLike}°C</p>
-        </div>
-        <div>
-          <p className="text-gray-500">Humidity:</p>
-          <p>{todayWeather.humidity}%</p>
-        </div>
-        <div>
-          <p className="text-gray-500">Wind:</p>
-          <p>{todayWeather.windSpeed} km/h</p>
-        </div>
-      </div>
 
-      {/* UV Index, Sunrise, Sunset */}
-      <div className="flex space-x-10 text-black text-base">
-        <div>
-          <p className="text-gray-500">UV Index:</p>
-          <p>{todayWeather.uvIndex}</p>
+      <div className="flex flex-row space-x-4 text-black text-base relative -top-5">
+                {/* UV Index, Sunrise, and Sunset */}
+        <div className="flex space-x-10">
+          <div>
+            <p className="text-gray-500">UV Index:</p>
+            <p>{todayWeather.uvIndex}</p>
+          </div>
+          <div>
+          <WiSunrise size={25} />
+            <p className="text-gray-500">Sunrise:</p>
+            <p>{new Date(todayWeather.sunrise).toLocaleTimeString()}</p>
+          </div>
+          <div>
+            <WiSunset size={25} />
+            <p className="text-gray-500">Sunset:</p>
+            <p>{new Date(todayWeather.sunset).toLocaleTimeString()}</p>
+          </div>
         </div>
-        <div>
-          <p className="text-gray-500">Sunrise:</p>
-          <p>{new Date(todayWeather.sunrise).toLocaleTimeString()}</p>
+        {/* Temperature */}
+        <div className="flex space-x-10">
+          <div>
+            <p className="text-gray-500">Min Temp:</p>
+            <p>{todayWeather.minTemp}°C</p>
+          </div>
+          <div>
+            <p className="text-gray-500">Max Temp:</p>
+            <p>{todayWeather.maxTemp}°C</p>
+          </div>
         </div>
-        <div>
-          <p className="text-gray-500">Sunset:</p>
-          <p>{new Date(todayWeather.sunset).toLocaleTimeString()}</p>
-        </div>
-      </div>
 
-      {/* Precipitation */}
-      {todayWeather.precipitation && (
-        <div className="text-black text-base">
-          <p className="text-gray-500">Precipitation:</p>
-          <p>{todayWeather.precipitation} mm</p>
+        {/* Wind Speed and Gusts */}
+        <div className="flex space-x-10">
+          <div>
+            <p className="text-gray-500">Wind Speed:</p>
+            <p>{todayWeather.windSpeed} km/h</p>
+          </div>
+          <div>
+            <p className="text-gray-500">Wind Gusts:</p>
+            <p>{todayWeather.windGusts} km/h</p>
+          </div>
         </div>
-      )}
-    </div>
+
+
+
+        {/* Precipitation */}
+        {todayWeather.precipitation !== undefined && (
+          <div className="text-black text-base">
+            <p className="text-gray-500">Precipitation:</p>
+            <p>{todayWeather.precipitation} mm</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
