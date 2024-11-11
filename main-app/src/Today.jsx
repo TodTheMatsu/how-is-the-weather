@@ -20,7 +20,7 @@ function Today({ weatherData, getWeatherCondition }) {
   if (!todayData) {
     return <div>Loading...</div>;
   }
-
+ 
   const todayIndex = 0; // Since the API's daily array starts with today as the first element
 
   const todayWeather = {

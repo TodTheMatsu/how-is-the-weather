@@ -51,9 +51,9 @@ function App() {
     
     if (currentHour >= 5 && currentHour < 7) {
       return 'bg-gradient-to-t from-yellow-200 via-yellow-300 to-yellow-400'; // Morning
-    } else if (currentHour >= 7 && currentHour < 15) {
+    } else if (currentHour >= 7 && currentHour < 17) {
       return 'bg-gradient-to-t from-sky-400 via-sky-300 to-sky-100'; // Afternoon
-    } else if (currentHour >= 15 && currentHour < 20) {
+    } else if (currentHour >= 17 && currentHour < 20) {
       return 'bg-gradient-to-t from-orange-500 via-red-500 to-pink-500'; // Evening
     } else {
       return 'bg-gradient-to-t from-indigo-900 via-purple-900 to-blue-900'; // Night
