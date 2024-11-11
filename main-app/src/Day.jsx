@@ -55,7 +55,7 @@ function Day({ maxTemperature, minTemperature, dayOfWeek, weatherCondition, prec
       isToday ? 'h-[250px] w-[180px]' : 'h-[200px] w-[150px]'
     } backdrop-blur-3xl bg-white bg-opacity-35 shadow-2xl rounded-lg flex flex-col items-center justify-center transition-all relative`}>
       {weatherIcon}
-      <h1 className={`text-md font-sans font-semibold absolute ${textSize} top-2 left-2`}>
+      <h1 className={`text-md font-sans font-semibold absolute ${textSize} top-2`}>
         {dayOfWeek}
       </h1>
       <p className={`font-semibold ${tempSize}`}>
