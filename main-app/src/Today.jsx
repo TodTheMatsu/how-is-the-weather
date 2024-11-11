@@ -35,6 +35,7 @@ function Today({ weatherData, getWeatherCondition }) {
     precipitation: todayData.precipitation_sum[todayIndex],
   };
 
+  console.log(todayWeather.weatherCondition)
   let weatherIcon;
   switch (todayWeather.condition) {
     case 'clear_sky':
@@ -48,10 +49,25 @@ function Today({ weatherData, getWeatherCondition }) {
     case 'drizzle':
       weatherIcon = <WiShowers size={iconSize} />;
       break;
+    case 'freezing_drizzle':
+      weatherIcon = <WiShowers size={iconSize} />;
+      break;
     case 'rain':
       weatherIcon = <WiRain size={iconSize} />;
       break;
+    case 'freezing_rain':
+      weatherIcon = <WiRain size={iconSize} />;
+      break;
     case 'snow':
+      weatherIcon = <WiSnow size={iconSize} />;
+      break;
+    case 'snow_grains':
+      weatherIcon = <WiSnow size={iconSize} />;
+      break;
+    case 'rain_showers':
+      weatherIcon = <WiShowers size={iconSize} />;
+      break;
+    case 'snow_showers':
       weatherIcon = <WiSnow size={iconSize} />;
       break;
     case 'thunderstorm':
@@ -74,7 +90,6 @@ function Today({ weatherData, getWeatherCondition }) {
         {weatherIcon}
         
         <div className="text-black text-4xl font-semibold">
-            
           <p className="text-7xl">{todayWeather.maxTemp}°C</p>
           <p className="text-lg text-gray-500 bg-opacity-70 rounded-full px-3 py-0.5 mt-2 inline-block">
              {todayWeather.condition.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}
