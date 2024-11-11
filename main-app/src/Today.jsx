@@ -69,7 +69,7 @@ function Today({ weatherData, getWeatherCondition }) {
         <h1>Today's Weather</h1>
       </div>
 
-      <div className="flex items-center space-x-4 mb-4 -top-5 relative">
+      <div className="flex items-center space-x-4 -top-5 relative">
         {weatherIcon}
         <div className="text-black text-4xl font-bold">
           <p className="text-7xl">{todayWeather.maxTemp}°C</p>
@@ -81,41 +81,41 @@ function Today({ weatherData, getWeatherCondition }) {
 
       <div className="flex flex-row space-x-4 text-black text-base relative -top-5">
                 {/* UV Index, Sunrise, and Sunset */}
-        <div className="flex space-x-10">
-          <div>
+        <div className="flex space-x-4">
+          <div className='items-center flex flex-col'>
             <p className="text-gray-500">UV Index:</p>
             <p>{todayWeather.uvIndex}</p>
           </div>
-          <div>
+          <div className='relative -top-6 items-center flex flex-col'>
           <WiSunrise size={25} />
             <p className="text-gray-500">Sunrise:</p>
             <p>{new Date(todayWeather.sunrise).toLocaleTimeString()}</p>
           </div>
-          <div>
+          <div className='relative -top-6 items-center flex flex-col'>
             <WiSunset size={25} />
             <p className="text-gray-500">Sunset:</p>
             <p>{new Date(todayWeather.sunset).toLocaleTimeString()}</p>
           </div>
         </div>
         {/* Temperature */}
-        <div className="flex space-x-10">
-          <div>
+        <div className="flex space-x-4">
+        <div className='items-center flex flex-col'>
             <p className="text-gray-500">Min Temp:</p>
             <p>{todayWeather.minTemp}°C</p>
           </div>
-          <div>
+          <div className='items-center flex flex-col'>
             <p className="text-gray-500">Max Temp:</p>
             <p>{todayWeather.maxTemp}°C</p>
           </div>
         </div>
 
         {/* Wind Speed and Gusts */}
-        <div className="flex space-x-10">
-          <div>
+        <div className="flex space-x-4">
+        <div className='items-center flex flex-col'>
             <p className="text-gray-500">Wind Speed:</p>
             <p>{todayWeather.windSpeed} km/h</p>
           </div>
-          <div>
+          <div className='items-center flex flex-col'>
             <p className="text-gray-500">Wind Gusts:</p>
             <p>{todayWeather.windGusts} km/h</p>
           </div>
@@ -125,7 +125,7 @@ function Today({ weatherData, getWeatherCondition }) {
 
         {/* Precipitation */}
         {todayWeather.precipitation !== undefined && (
-          <div className="text-black text-base">
+          <div className='items-center flex flex-col'>
             <p className="text-gray-500">Precipitation:</p>
             <p>{todayWeather.precipitation} mm</p>
           </div>
