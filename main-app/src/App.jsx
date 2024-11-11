@@ -64,7 +64,7 @@ function App() {
   const fetchWeather = async () => {
     if (location.latitude && location.longitude && location.timeZone) {
       const response = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,rain_sum,showers_sum,snowfall_sum&timezone=${location.timeZone}`
+        `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,daylight_duration,sunshine_duration,uv_index_max,uv_index_clear_sky_max,precipitation_sum,rain_sum,showers_sum,snowfall_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant,shortwave_radiation_sum&timezone=${location.timeZone}`
       );
       const data = await response.json();
       console.log(data);
@@ -128,7 +128,7 @@ function App() {
       ></video>
 
       <div className={`${backgroundClass}backdrop-opacity-10 relative z-10 h-[200vh] flex items-top items-center flex-col justify-center space-x-5`}>
-      <Today />
+      <Today weatherData={weatherData} getWeatherCondition={getWeatherCondition} />
         <div className="-top-[500px] flex flex-grow-0 h-[300px] flex-row items-center justify-center space-x-5 relative">
           {weatherData.daily && weatherData.daily.temperature_2m_max.map((temp, index) => {
             const date = new Date(weatherData.daily.time[index]);

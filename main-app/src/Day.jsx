@@ -1,6 +1,6 @@
 import { WiDaySunny, WiCloudy, WiRain, WiSnow, WiShowers, WiFog, WiThunderstorm, WiHail } from 'react-icons/wi';
 
-function Day({ maxTemperature, minTemperature, dayOfWeek, weatherCondition, precipitation }) {
+function Day({ maxTemperature, minTemperature, dayOfWeek, weatherCondition, precipitation, windSpeed, windGusts, uvIndex, sunrise, sunset }) {
   const isToday = dayOfWeek === "Today";
   const iconSize = isToday ? 70 : 50;
   const textSize = isToday ? 'text-3xl' : 'text-xl';
@@ -51,11 +51,9 @@ function Day({ maxTemperature, minTemperature, dayOfWeek, weatherCondition, prec
   }
 
   return (
-    <div
-      className={`${
-        isToday ? 'h-[250px] w-[180px]' : 'h-[200px] w-[150px]'
-      } backdrop-blur-3xl bg-white bg-opacity-35 shadow-2xl rounded-lg flex flex-col items-center justify-center transition-all relative`}
-    >
+    <div className={`${
+      isToday ? 'h-[250px] w-[180px]' : 'h-[200px] w-[150px]'
+    } backdrop-blur-3xl bg-white bg-opacity-35 shadow-2xl rounded-lg flex flex-col items-center justify-center transition-all relative`}>
       {weatherIcon}
       <h1 className={`text-md font-sans font-semibold absolute ${textSize} top-2 left-2`}>
         {dayOfWeek}
@@ -64,11 +62,34 @@ function Day({ maxTemperature, minTemperature, dayOfWeek, weatherCondition, prec
         {maxTemperature}°
       </p>
       <p>{minTemperature}°</p>
-      {/* Precipitation info */}
+
+      {/* Precipitation */}
       {precipitation && (
         <p className="text-sm text-gray-700">
           {precipitation} mm of {weatherCondition === 'snow' ? 'snow' : 'rain'}
         </p>
+      )}
+
+      {/* Wind */}
+      {windSpeed && (
+        <p className="text-sm text-gray-700">
+          Wind: {windSpeed} km/h
+        </p>
+      )}
+
+      {/* UV Index */}
+      {uvIndex && (
+        <p className="text-sm text-gray-700">
+          UV Index: {uvIndex}
+        </p>
+      )}
+
+      {/* Sunrise and Sunset */}
+      {sunrise && sunset && (
+        <div className="text-sm text-gray-700">
+          <p>Sunrise: {new Date(sunrise).toLocaleTimeString()}</p>
+          <p>Sunset: {new Date(sunset).toLocaleTimeString()}</p>
+        </div>
       )}
     </div>
   );
