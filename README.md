@@ -15,7 +15,7 @@ A modern, responsive weather application built with React. It provides real-time
 
 ## Demo
 
-[Live Demo Link (Optional)](insert-live-demo-link-here)
+(Not yet available)
 
 ## Screenshots
 
