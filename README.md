@@ -40,7 +40,7 @@ git clone https://github.com/your-username/weather-app.git
 2. **Navigate into the project folder**:
 
 ```bash
-cd weather-app
+cd main-app
 ```
 
 3. **Install dependencies**:
