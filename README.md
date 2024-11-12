@@ -28,6 +28,7 @@ A modern, responsive weather application built with React. It provides real-time
 - **Open-Meteo API**: Provides weather forecast data.
 - **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
 - **HTML5 Video**: Used for animated background video.
+- **Vite**: A fast build tool and development server.
 
 ## Installation
 
@@ -93,12 +94,4 @@ Contributions are welcome! If you'd like to improve this project or fix bugs, fe
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
-
-## Acknowledgements
-
-- **Open-Meteo API**: For providing the weather data.
-- **Tailwind CSS**: For making it easy to style the application.
-- **React**: For providing an excellent framework for building dynamic web applications.
-- **Cloud video**: Video sourced from [Insert video source if necessary].
-
 ---
