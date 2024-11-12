@@ -19,8 +19,8 @@ A modern, responsive weather application built with React. It provides real-time
 
 ## Screenshots
 
-![Weather App Screenshot 1](insert-screenshot-link-here)
-![Weather App Screenshot 2](insert-screenshot-link-here)
+![image](https://github.com/user-attachments/assets/da275d72-41b5-4ebb-9a4e-02b8be00ce7b)
+
 
 ## Technologies Used
 
