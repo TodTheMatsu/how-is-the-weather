@@ -81,7 +81,7 @@ function Today({ weatherData, getWeatherCondition }) {
   }
 
   return (
-    <div className="h-[400px] w-[1200px] -top-[500px] backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl p-8 flex flex-col items-center justify-center relative space-y-4">
+    <div className="h-[400px] w-[1200px] -top-[350px] backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl p-8 flex flex-col items-center justify-center relative space-y-4">
       <div className="text-black text-3xl font-bold mb-6 relative -bottom-5">
         <h1>Today's Weather</h1>
       </div>

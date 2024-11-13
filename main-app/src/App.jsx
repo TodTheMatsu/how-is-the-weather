@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Day from './Day';
 import cloud from './assets/cloud.mp4';
 import Today from './Today';
+import Chart from './Chart';
 function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [backgroundClass, setBackgroundClass] = useState('bg-sky-100');
@@ -129,7 +130,7 @@ function App() {
 
       <div className={`${backgroundClass}backdrop-opacity-10 relative z-10 h-[200vh] flex items-top items-center flex-col justify-center space-x-5`}>
       <Today weatherData={weatherData} getWeatherCondition={getWeatherCondition} />
-        <div className="-top-[500px] flex flex-grow-0 h-[300px] flex-row items-center justify-center space-x-5 relative">
+        <div className="-top-[350px] flex flex-grow-0 h-[300px] flex-row items-center justify-center space-x-5 relative">
           {weatherData.daily && weatherData.daily.temperature_2m_max.map((temp, index) => {
             const date = new Date(weatherData.daily.time[index]);
             const dayOfWeek = daysOfWeek[date.getDay()];
@@ -151,6 +152,7 @@ function App() {
             );
           })}
         </div>
+        <Chart weatherData={weatherData} getWeatherCondition={getWeatherCondition} />
       </div>
     </div>
   );
