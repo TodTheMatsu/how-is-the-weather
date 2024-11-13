@@ -45,14 +45,14 @@ function Chart({ weatherData }) {
               <stop offset="95%" stopColor="#FF4500" stopOpacity={0.1} />
             </linearGradient>
           </defs>
-          <CartesianGrid stroke="" />
+          <CartesianGrid stroke="none" />
           <XAxis dataKey="time" label={{ value: 'Hour', position: 'insideBottom', offset: -5 }} />
           <YAxis
             yAxisId="left"
             domain={[minTemperature, maxTemperature]}
             label={{ value: '', angle: -90, position: 'insideLeft' }}
             tickFormatter={formatTemperature}
-            opacity={0}
+            stroke='none'
           />
           <Tooltip labelFormatter={formatTemperature} formatter={(value) => formatTemperature(value)} />
 
