@@ -132,7 +132,7 @@ function App() {
         className="absolute top-0 left-0 w-full h-full object-cover blur-2xl"
       ></video>
 
-      <div className={`${backgroundClass} backdrop-opacity-10 relative z-10 h-[200vh] flex items-top items-center flex-col justify-center space-y-5 space-x-5`}>
+      <div className={`${backgroundClass}backdrop-opacity-10 relative z-10 h-[200vh] flex items-top items-center flex-col justify-center space-y-5 space-x-5`}>
         <Today weatherData={weatherData} getWeatherCondition={getWeatherCondition} />
         
         <div className="flex flex-grow-0 flex-row items-center justify-center space-x-5 relative">
