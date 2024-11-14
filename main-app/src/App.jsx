@@ -74,11 +74,12 @@ function App() {
 
   const fetchNews = async () => {
     const response = await fetch(
-      'https://newsdata.io/api/1/news?apikey=pub_592087db66ab56f543b57b2aac8c6a651c5bc&q=weather&country=vi&language=en,vi '
+      `https://newsdata.io/api/1/news?apikey=${import.meta.env.VITE_NEWS_API_KEY}&q=weather&country=vi&language=en,vi`
     );
     const news = await response.json();
     setNewsData(news.results); // Set array of news results
   };
+  
 
   useEffect(() => {
     const getUserLocation = () => {
