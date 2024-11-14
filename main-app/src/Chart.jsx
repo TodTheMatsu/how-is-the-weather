@@ -19,15 +19,7 @@ function Chart({ weatherData }) {
     })
     .filter(Boolean);
 
-  // Create a separate array for the area chart with random variation
-  const chartData = todayHourlyData.map((data) => {
-    const variation = (Math.random() - 0.5) * 2; // Add random variation
-    return {
-      ...data,
-      temperature: data.temperature + variation,
-    };
-  });
-
+  // Temperature values for min/max range calculation
   const temperatures = todayHourlyData.map((data) => data.temperature);
   const minTemperature = Math.min(...temperatures) - 5;
   const maxTemperature = Math.max(...temperatures) + 5;
@@ -35,10 +27,10 @@ function Chart({ weatherData }) {
   const formatTemperature = (value) => value.toFixed(1);
 
   return (
-    <div className="h-[400px] w-[1200px] -top-[350px] backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl p-5 flex flex-col items-center justify-center relative ">
+    <div className="h-[400px] w-[1200px] -top-[350px] backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl p-5 flex flex-col items-center justify-center relative">
       <h2 className="text-lg font-semibold">Today's Temperature</h2>
-      <ResponsiveContainer width="100%" height="90%" >
-        <AreaChart data={chartData}>
+      <ResponsiveContainer width="100%" height="90%">
+        <AreaChart data={todayHourlyData}>
           <defs>
             <linearGradient id="temperatureGradient" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#FFA500" stopOpacity={1} />
@@ -52,7 +44,7 @@ function Chart({ weatherData }) {
             domain={[minTemperature, maxTemperature]}
             label={{ value: '', angle: -90, position: 'insideLeft' }}
             tickFormatter={formatTemperature}
-            stroke='none'
+            stroke="none"
           />
           <Tooltip labelFormatter={formatTemperature} formatter={(value) => formatTemperature(value)} />
 
@@ -64,7 +56,6 @@ function Chart({ weatherData }) {
             fill="url(#temperatureGradient)"
             name="Temperature"
           >
-            {/* Add LabelList to display temperatures at the top */}
             <LabelList dataKey="temperature" position="top" formatter={formatTemperature} />
           </Area>
         </AreaChart>
