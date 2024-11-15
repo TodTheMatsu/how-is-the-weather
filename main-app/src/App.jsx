@@ -4,13 +4,15 @@ import cloud from './assets/cloud.mp4';
 import Today from './Today';
 import Chart from './Chart';
 import News from './News';
+import Loading from './Loading';  
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [backgroundClass, setBackgroundClass] = useState('bg-sky-100');
   const [location, setLocation] = useState({ latitude: null, longitude: null, timeZone: null });
   const [loading, setLoading] = useState(true);
-  const [newsData, setNewsData] = useState([]); // Array for multiple news items
+  const [newsData, setNewsData] = useState([]);
+  const [loadingDelay, setLoadingDelay] = useState(true); 
 
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -79,7 +81,6 @@ function App() {
     const news = await response.json();
     setNewsData(news.results); // Set array of news results
   };
-  
 
   useEffect(() => {
     const getUserLocation = () => {
@@ -114,11 +115,19 @@ function App() {
   }, [location]);
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingDelay(false); 
+    }, 3000); // 3-second delay
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     fetchNews(); // Fetch news on component mount
   }, []);
 
-  if (loading || !weatherData) {
-    return <div>Loading...</div>;
+  if (loading || loadingDelay || !weatherData) {
+    return <Loading />;
   }
 
   const today = new Date().toISOString().split('T')[0];
@@ -133,7 +142,7 @@ function App() {
         className="absolute top-0 left-0 w-full h-full object-cover blur-2xl"
       ></video>
 
-      <div className={`${backgroundClass}backdrop-opacity-10 relative z-10 h-[200vh] flex items-top items-center flex-col justify-center space-y-5 space-x-5`}>
+      <div className={`${backgroundClass} backdrop-opacity-10 relative z-10 h-[200vh] flex items-top items-center flex-col justify-center space-y-5 space-x-5`}>
         <Today weatherData={weatherData} getWeatherCondition={getWeatherCondition} />
         
         <div className="flex flex-grow-0 flex-row items-center justify-center space-x-5 relative">
