@@ -3,11 +3,11 @@ import React from 'react';
 function Loading({ isLoading }) {
   return (
     <div
-      className={`absolute inset-0 h-[200vh] flex justify-center items-start  bg-white z-50 transition-opacity duration-1000 delay-1000 ${
+      className={`fixed w-full h-full top-0 left-0 inset-0 flex justify-center items-center bg-white z-50 transition-opacity duration-1000 delay-1000 ${
         isLoading ? 'opacity-100' : 'opacity-0 pointer-events-none'
       }`}
     >
-      <div className="flex flex-col items-center relative -bottom-[400px]">
+      <div className="flex flex-col items-center">
         <div
           className="animate-spin inline-block w-16 h-16 border-4 border-solid rounded-full border-t-transparent border-gray-800"
           role="status"
