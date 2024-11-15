@@ -67,7 +67,7 @@ A modern, responsive weather application built with React. It provides real-time
 6. **Visit the app** in your browser:
 
    ```bash
-   http://localhost:3000
+   http://localhost:5173/
    ```
 
 ## API Integration
