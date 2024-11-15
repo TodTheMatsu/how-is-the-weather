@@ -4,7 +4,7 @@ import cloud from './assets/cloud.mp4';
 import Today from './Today';
 import Chart from './Chart';
 import News from './News';
-import Loading from './Loading';  
+import Loading from './Loading';
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
@@ -12,7 +12,7 @@ function App() {
   const [location, setLocation] = useState({ latitude: null, longitude: null, timeZone: null });
   const [loading, setLoading] = useState(true);
   const [newsData, setNewsData] = useState([]);
-  const [loadingDelay, setLoadingDelay] = useState(true); 
+  const [loadingDelay, setLoadingDelay] = useState(true);
 
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -64,22 +64,37 @@ function App() {
   };
 
   const fetchWeather = async () => {
-    if (location.latitude && location.longitude && location.timeZone) {
-      const response = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,precipitation,rain,showers,snowfall,snow_depth,cloud_cover,visibility,evapotranspiration&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,daylight_duration,sunshine_duration,uv_index_max,uv_index_clear_sky_max,precipitation_sum,rain_sum,showers_sum,snowfall_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant,shortwave_radiation_sum&timezone=${location.timeZone}`
-      );
-      const data = await response.json();
-      setWeatherData(data);
+    try {
+      if (location.latitude && location.longitude && location.timeZone) {
+        const response = await fetch(
+          `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,precipitation,rain,showers,snowfall,snow_depth,cloud_cover,visibility,evapotranspiration&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,daylight_duration,sunshine_duration,uv_index_max,uv_index_clear_sky_max,precipitation_sum,rain_sum,showers_sum,snowfall_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant,shortwave_radiation_sum&timezone=${location.timeZone}`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setWeatherData(data);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to fetch weather data:", error);
+      setWeatherData(null);  // Set to null or empty object for graceful fallback
+    } finally {
       setLoading(false);
     }
   };
 
   const fetchNews = async () => {
-    const response = await fetch(
-      `https://newsdata.io/api/1/news?apikey=${import.meta.env.VITE_NEWS_API_KEY}&q=weather&country=vi&language=en,vi`
-    );
-    const news = await response.json();
-    setNewsData(news.results); // Set array of news results
+    try {
+      const response = await fetch(
+        `https://newsdata.io/api/1/news?apikey=${import.meta.env.VITE_NEWS_API_KEY}&q=weather&country=vi&language=en,vi`
+      );
+      if (response.ok) {
+        const news = await response.json();
+        setNewsData(news.results);
+      }
+    } catch (error) {
+      console.error("Failed to fetch news data:", error);
+      setNewsData([]);  // Default to empty array if there's an error
+    }
   };
 
   useEffect(() => {
@@ -92,7 +107,7 @@ function App() {
           setLocation({ latitude, longitude, timeZone });
         },
         (error) => {
-          console.error("Error getting location: ", error);
+          console.error("Error getting location:", error);
           setLoading(false);
         }
       );
@@ -116,17 +131,18 @@ function App() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLoadingDelay(false); 
-    }, 3000); // 3-second delay
+      setLoadingDelay(false);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    fetchNews(); // Fetch news on component mount
+    fetchNews();
   }, []);
 
-  if (loading || loadingDelay || !weatherData) {
+  // Combine both loading states: delay + data loading
+  if (loading || loadingDelay) {
     return <Loading />;
   }
 
@@ -143,10 +159,10 @@ function App() {
       ></video>
 
       <div className={`${backgroundClass} backdrop-opacity-10 relative z-10 h-[200vh] flex items-top items-center flex-col justify-center space-y-5 space-x-5`}>
-        <Today weatherData={weatherData} getWeatherCondition={getWeatherCondition} />
+        <Today weatherData={weatherData || {}} getWeatherCondition={getWeatherCondition} />
         
         <div className="flex flex-grow-0 flex-row items-center justify-center space-x-5 relative">
-          {weatherData.daily && weatherData.daily.temperature_2m_max.map((temp, index) => {
+          {weatherData?.daily?.temperature_2m_max?.map((temp, index) => {
             const date = new Date(weatherData.daily.time[index]);
             const dayOfWeek = daysOfWeek[date.getDay()];
             const dateString = date.toISOString().split('T')[0];
@@ -164,12 +180,11 @@ function App() {
                 precipitation={precipitation}
               />
             );
-          })}
+          }) || <p>No data available</p>}
         </div>
         
-        <Chart weatherData={weatherData} getWeatherCondition={getWeatherCondition} />
+        <Chart weatherData={weatherData || {}} getWeatherCondition={getWeatherCondition} />
 
-        {/* Render multiple News components */}
         <div className="h-[700px] w-[1200px] backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl flex flex-wrap items-center justify-center relative space-x-4">
           {newsData.slice(0, 6).map((article, index) => (
             <News key={index} article={article} />
