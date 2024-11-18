@@ -150,7 +150,7 @@ function App() {
           className="absolute top-0 left-0 w-full h-full object-cover blur-2xl"
         ></video>
         
-        <div className={`${backgroundClass} backdrop-opacity-10 relative z-10 h-[200vh] flex items-top items-center flex-col justify-center space-y-5 space-x-5`}>
+        <div className={`${backgroundClass}backdrop-opacity-10 relative z-10 h-[200vh] flex items-top items-center flex-col justify-center space-y-5 space-x-5`}>
           <Today weatherData={weatherData || {}} getWeatherCondition={getWeatherCondition} />
           
           <div className="flex flex-grow-0 flex-row items-center justify-center space-x-5 relative">
@@ -174,9 +174,7 @@ function App() {
               );
             }) || <p>No data available</p>}
           </div>
-          
           <Chart weatherData={weatherData || {}} getWeatherCondition={getWeatherCondition} />
-  
           <div className="h-[700px] w-[1200px] backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl flex flex-wrap items-center justify-center relative space-x-4">
             {newsData.slice(0, 6).map((article, index) => (
               <News key={index} article={article} />
@@ -186,8 +184,5 @@ function App() {
       </div>
     )}
     </>);
-  
-
 }
-
 export default App;
