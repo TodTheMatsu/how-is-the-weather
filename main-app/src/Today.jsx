@@ -11,7 +11,7 @@ import {
   WiSunrise,
   WiSunset,
 } from 'react-icons/wi';
-
+import { motion } from "framer-motion"
 function Today({ weatherData, getWeatherCondition }) {
   const todayData = weatherData.daily ? weatherData.daily : null;
   const hourlyData = weatherData.hourly ? weatherData.hourly : null; // Add hourly data
@@ -21,7 +21,7 @@ function Today({ weatherData, getWeatherCondition }) {
     return <div>Loading...</div>;
   }
 
-  const todayIndex = 0; // Since the API's daily array starts with today as the first element
+  const todayIndex = 0;
 
   const todayWeather = {
     maxTemp: todayData.temperature_2m_max[todayIndex],
@@ -84,7 +84,7 @@ function Today({ weatherData, getWeatherCondition }) {
   }
 
   return (
-    <div className="h-[400px] w-[1200px]  backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl flex flex-col items-center justify-center relative space-y-4">
+    <motion.div className="h-[400px] w-[1200px]  backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl flex flex-col items-center justify-center relative space-y-4" initial={{scale: 0, y:1000, opacity: 0}} animate={{scale: 1, opacity: 1, y:0,transition: { duration: 1.5 }}}>
       <div className="text-black text-3xl font-bold mb-6 relative -bottom-5">
         <h1>Today's Weather</h1>
       </div>
@@ -151,7 +151,7 @@ function Today({ weatherData, getWeatherCondition }) {
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
 

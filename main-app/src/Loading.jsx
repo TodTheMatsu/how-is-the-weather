@@ -3,7 +3,7 @@ import React from 'react';
 function Loading({ isLoading }) {
   return (
     <div
-      className={`fixed w-full h-full top-0 left-0 inset-0 flex justify-center items-center bg-white z-50 transition-opacity duration-1000 delay-1000 ${
+      className={`fixed w-full h-full top-0 left-0 inset-0 flex justify-center items-center bg-white z-50 transition-opacity duration-1000 delay-500 ${
         isLoading ? 'opacity-100' : 'opacity-0 pointer-events-none'
       }`}
     >
