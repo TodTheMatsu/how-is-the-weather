@@ -27,7 +27,7 @@ function Chart({ weatherData }) {
   const formatTemperature = (value) => value.toFixed(1);
 
   return (
-    <motion.div className="h-[400px] w-[1200px] backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl p-5 flex flex-col items-center justify-center relative" initial={{scale: 0, y:1000, opacity: 0}} animate={{scale: 1, opacity: 1, y:0,transition: { duration: 1.5 }}}>
+    <motion.div className="h-[400px] w-[1200px] backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl p-5 flex flex-col items-center justify-center relative" initial={{scale: 0, y:1000, opacity: 0}} animate={{scale: 1, opacity: 1, y:0,transition: { duration: 1.5, delay: 0.5 }}}>
       <h2 className="text-lg font-semibold">Today's Temperature</h2>
       <ResponsiveContainer width="100%" height="90%">
         <AreaChart data={todayHourlyData}>
