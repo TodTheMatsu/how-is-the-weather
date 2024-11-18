@@ -175,11 +175,11 @@ function App() {
             }) || <p>No data available</p>}
           </motion.div>
           <Chart weatherData={weatherData || {}} getWeatherCondition={getWeatherCondition} />
-          <div className="h-[700px] w-[1200px] backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl flex flex-wrap items-center justify-center relative space-x-4">
+          <motion.div className="h-[700px] w-[1200px] backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl flex flex-wrap items-center justify-center relative space-x-4" initial={{scale: 0, y:1000, opacity: 0}} animate={{scale: 1, opacity: 1, y:0,transition: { duration: 1.5 }}}>
             {newsData.slice(0, 6).map((article, index) => (
               <News key={index} article={article} />
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     )}
