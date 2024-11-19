@@ -6,6 +6,7 @@ import Chart from './Chart';
 import News from './News';
 import Loading from './Loading';
 import { motion } from "framer-motion"
+
 function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [backgroundClass, setBackgroundClass] = useState('bg-sky-100');
@@ -135,7 +136,7 @@ function App() {
   
 
   const today = new Date().toISOString().split('T')[0];
-
+  console.log(newsData)
   return (
     <>
     <Loading isLoading={loading} />
@@ -150,7 +151,7 @@ function App() {
           className="absolute top-0 left-0 w-full h-full object-cover blur-2xl"
         ></video>
         
-        <div className={`${backgroundClass}backdrop-opacity-10 relative z-10 h-[200vh] flex items-top items-center flex-col justify-center space-y-5 space-x-5`} >
+        <div className={`${backgroundClass}backdrop-opacity-10 relative z-10 flex items-top items-center flex-col justify-center space-y-5 space-x-5`} >
           <Today weatherData={weatherData || {}} getWeatherCondition={getWeatherCondition} />
           
           <motion.div className="flex flex-grow-0 flex-row items-center justify-center space-x-5 relative" initial={{scale: 0, y:1000, opacity: 0}} animate={{scale: 1, opacity: 1, y:0,transition: { duration: 1.5, delay: 0.5 }}}>
@@ -175,11 +176,21 @@ function App() {
             }) || <p>No data available</p>}
           </motion.div>
           <Chart weatherData={weatherData || {}} getWeatherCondition={getWeatherCondition} />
-          <motion.div className="h-[700px] w-[1200px] backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl flex flex-wrap items-center justify-center relative space-x-4" initial={{scale: 0, y:1000, opacity: 0}} animate={{scale: 1, opacity: 1, y:0,transition: { duration: 1.5, delay: 0.5 }}}>
-            {newsData.slice(0, 6).map((article, index) => (
-              <News key={index} article={article} />
-            ))}
+          <motion.div 
+              className="w-[1200px] min-h-min backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl flex flex-wrap items-center justify-center relative space-x-4 space-y-5"
+              style={{ maxHeight: '700px' }}
+              initial={{ scale: 0, y: 1000, opacity: 0 }} 
+              animate={{ scale: 1, opacity: 1, y: 0, transition: { duration: 1.5, delay: 0.5 }}}
+            >
+              {newsData.length > 0 ? (
+                newsData.map((article, index) => (
+                  <News key={index} article={article} />
+                ))
+              ) : (
+                <p>No news articles available</p>
+              )}
           </motion.div>
+
         </div>
       </div>
     )}
