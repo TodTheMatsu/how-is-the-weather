@@ -151,7 +151,7 @@ function App() {
           className="absolute top-0 left-0 w-full h-full object-cover blur-2xl"
         ></video>
         
-        <div className={`${backgroundClass}backdrop-opacity-10 h-[250vh] relative z-10 flex items-top items-center flex-col justify-center space-y-5 space-x-5`} >
+        <div className={`${backgroundClass}backdrop-opacity-10 py-10 h-max min-h-min relative z-10 flex items-top items-center flex-col justify-center space-y-5 space-x-5`} >
           <Today weatherData={weatherData || {}} getWeatherCondition={getWeatherCondition} />
           
           <motion.div className="flex flex-grow-0 flex-row items-center justify-center space-x-5 relative" initial={{scale: 1, y:200, opacity: 0}} whileInView={{scale: 1, opacity: 1, y:0, transition: { duration: 1}}}>
@@ -171,15 +171,16 @@ function App() {
                   minTemperature={weatherData.daily.temperature_2m_min[index]}
                   weatherCondition={weatherCondition}
                   precipitation={precipitation}
+                  index={index}
                 />
               );
             }) || <p>No data available</p>}
           </motion.div>
           <Chart weatherData={weatherData || {}} getWeatherCondition={getWeatherCondition} />
           <motion.div 
-              className="w-[1200px] min-h-min backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl flex flex-wrap items-center py-5 justify-center relative space-x-4 space-y-5"
+              className="w-[1200px] min-h-min h-[600px] backdrop-blur-3xl bg-opacity-35 bg-white shadow-xl rounded-3xl flex flex-wrap items-center py-5 justify-center relative space-x-4 space-y-5"
               style={{ maxHeight: '700px' }}
-              initial={{scale: 1, y:200, opacity: 0}} whileInView={{scale: 1, opacity: 1, y:0, transition: { duration: 1}}}
+              initial={{scale: 1, y:100, opacity: 0}} whileInView={{scale: 1, opacity: 1, y:0, transition: { duration: .5}}}
             >
               {newsData.length > 0 ? (
                 newsData.map((article, index) => (
