@@ -184,7 +184,7 @@ function App() {
             >
               {newsData.length > 0 ? (
                 newsData.map((article, index) => (
-                  <News key={index} article={article} />
+                  <News key={index} article={article} index={index} />
                 ))
               ) : (
                 <p>No news articles available</p>

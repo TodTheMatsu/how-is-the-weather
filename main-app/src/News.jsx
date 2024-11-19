@@ -1,14 +1,25 @@
-import {motion} from "framer-motion"
-import { del } from "framer-motion/client";
-function News({ article }) {
-    return (
-      <motion.a
-        href={article.link || '#'}
-        target={article.link}       // Open in a new tab
-        rel="noopener noreferrer"  // Security measure
-        className="w-[360px] h-[300px] bg-white backdrop-blur-3xl bg-opacity-35 shadow-md rounded-lg flex flex-col items-center p-2 hover:scale-105 transition ease-in-out duration-300 delay-75 "
-        whileInView={{ scale: 1, opacity: 1, y: 0 }}
-        initial={{ scale: 1, opacity: 0, y: 0,transition: { duration: 1 } }}
+import { motion } from "framer-motion";
+
+function News({ article, index }) {
+  return (
+    <motion.a
+      href={article.link || '#'}
+      target={article.link}
+      rel="noopener noreferrer"
+      className="w-[360px] h-[300px] bg-transparent flex flex-col items-center p-1"
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        transition: { duration: index * 0.1 }, 
+      }}
+      initial={{ opacity: 0, y: 50 }}
+    >
+      <motion.div
+        whileHover={{
+          scale: 1.3,
+          transition: { duration: 0.1 },
+        }}
+        className="w-full h-full bg-white backdrop-blur-3xl bg-opacity-35  rounded-lg shadow-lg hover:bg-opacity-100 hover:z-20"
       >
         <div className="w-full h-[150px]">
           <img
@@ -21,9 +32,9 @@ function News({ article }) {
         <p className="text-xs text-center mt-1 text-gray-600">
           {article.description?.slice(0, 300) || ''}...
         </p>
-      </motion.a>
-    );
-  }
-  
-  export default News;
-  
+      </motion.div>
+    </motion.a>
+  );
+}
+
+export default News;
