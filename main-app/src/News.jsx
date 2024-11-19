@@ -1,4 +1,5 @@
 import {motion} from "framer-motion"
+import { del } from "framer-motion/client";
 function News({ article }) {
     return (
       <motion.a
@@ -7,7 +8,7 @@ function News({ article }) {
         rel="noopener noreferrer"  // Security measure
         className="w-[360px] h-[300px] bg-white backdrop-blur-3xl bg-opacity-35 shadow-md rounded-lg flex flex-col items-center p-2 hover:scale-105 transition ease-in-out duration-300 delay-75 "
         whileInView={{ scale: 1, opacity: 1, y: 0 }}
-        initial={{ scale: 0.5, opacity: 0, y: 100 }}
+        initial={{ scale: 1, opacity: 0, y: 0,transition: { duration: 1 } }}
       >
         <div className="w-full h-[150px]">
           <img
